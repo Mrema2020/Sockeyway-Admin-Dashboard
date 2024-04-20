@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "898370900411",
+    "project_id": "sockeyway",
+    "storage_bucket": "sockeyway.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898370900411:android:742d91cbadbd66df86349e",
+        "android_client_info": {
+          "package_name": "com.example.sockeyway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRehyg62iyfeZpqhV5RdmkJhHMhsNBqTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898370900411:android:aa724328b35c5b4286349e",
+        "android_client_info": {
+          "package_name": "com.example.sockeyway_web"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRehyg62iyfeZpqhV5RdmkJhHMhsNBqTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
