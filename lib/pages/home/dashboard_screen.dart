@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/colors.dart';
-import '../../utils/size_config.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -40,8 +39,7 @@ class DashboardScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Text('Sockeyway Admin Dashboard',
-                style: TextStyle(fontSize: 20.0, color: Colors.blueGrey.shade600)),
+            child: Text('Sockeyway Admin Dashboard', style: TextStyle(fontSize: 20.0, color: Colors.blueGrey.shade600)),
           ),
         ],
       ),
@@ -60,14 +58,11 @@ class DashboardScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20.0),
             StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('posts')
-                  .snapshots(),
+              stream: FirebaseFirestore.instance.collection('posts').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: CircularProgressIndicator(
-                        color: AppColors.primaryColor),
+                    child: CircularProgressIndicator(color: AppColors.primaryColor),
                   );
                 }
                 return Padding(
@@ -78,18 +73,16 @@ class DashboardScreen extends StatelessWidget {
                     icon: Icons.flag_circle,
                     color: Colors.green,
                   ),
-                );;
+                );
+                ;
               },
             ),
             StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('news')
-                  .snapshots(),
+              stream: FirebaseFirestore.instance.collection('news').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: CircularProgressIndicator(
-                        color: AppColors.primaryColor),
+                    child: CircularProgressIndicator(color: AppColors.primaryColor),
                   );
                 }
                 return Padding(
@@ -100,18 +93,16 @@ class DashboardScreen extends StatelessWidget {
                     icon: Icons.article,
                     color: Colors.blue,
                   ),
-                );;
+                );
+                ;
               },
             ),
             StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('matches')
-                  .snapshots(),
+              stream: FirebaseFirestore.instance.collection('matches').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: CircularProgressIndicator(
-                        color: AppColors.primaryColor),
+                    child: CircularProgressIndicator(color: AppColors.primaryColor),
                   );
                 }
                 return Padding(
@@ -122,7 +113,45 @@ class DashboardScreen extends StatelessWidget {
                     icon: Icons.sports_soccer,
                     color: Colors.red,
                   ),
-                );;
+                );
+              },
+            ),
+            StreamBuilder(
+              stream: FirebaseFirestore.instance.collection('players').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppColors.primaryColor),
+                  );
+                }
+                return Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: SummaryCard(
+                    title: 'Total Player Cv',
+                    count: '${snapshot.data!.docs.length}',
+                    icon: Icons.person_pin,
+                    color: Colors.blueGrey,
+                  ),
+                );
+              },
+            ),
+            StreamBuilder(
+              stream: FirebaseFirestore.instance.collection('tickets').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppColors.primaryColor),
+                  );
+                }
+                return Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: SummaryCard(
+                    title: 'Tickets Issued',
+                    count: '${snapshot.data!.docs.length}',
+                    icon: CupertinoIcons.tickets_fill,
+                    color: Colors.brown,
+                  ),
+                );
               },
             ),
           ],

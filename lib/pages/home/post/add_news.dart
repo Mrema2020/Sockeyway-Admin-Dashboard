@@ -1,12 +1,10 @@
 import 'dart:html' as html;
 import 'dart:typed_data';
 
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,12 +18,10 @@ class AddNews extends StatefulWidget {
 }
 
 class _AddNewsState extends State<AddNews> {
-
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  String?_image;
+  String? _image;
   bool isLoading = false;
-
 
   Future<void> _pickImage() async {
     html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
@@ -48,14 +44,12 @@ class _AddNewsState extends State<AddNews> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Add News',
-          style: TextStyle(
-              color: AppColors.primaryColor,
-            fontSize: 18
-          ),
+        title: const Text(
+          'Add News',
+          style: TextStyle(color: AppColors.primaryColor, fontSize: 18),
         ),
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios),
@@ -75,16 +69,12 @@ class _AddNewsState extends State<AddNews> {
                     const SizedBox(height: 16.0),
                   ],
                   Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(5)
-                    ),
+                    decoration: BoxDecoration(color: AppColors.primaryColor, borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
                       onPressed: _pickImage,
-                      child: const Text('Pick Image',
-                        style: TextStyle(
-                            color: AppColors.textColor
-                        ),
+                      child: const Text(
+                        'Pick Image',
+                        style: TextStyle(color: AppColors.textColor),
                       ),
                     ),
                   ),
@@ -101,24 +91,20 @@ class _AddNewsState extends State<AddNews> {
                   ),
                   const SizedBox(height: 16.0),
                   Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(5)
-                    ),
+                    decoration: BoxDecoration(color: AppColors.primaryColor, borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           isLoading = true;
                         });
                         _validate();
                       },
                       child: isLoading
-                      ? const Center(child: CircularProgressIndicator(color: AppColors.textColor))
-                      : const Text('Post',
-                        style: TextStyle(
-                            color: AppColors.textColor
-                        ),
-                      ),
+                          ? const Center(child: CircularProgressIndicator(color: AppColors.textColor))
+                          : const Text(
+                              'Post',
+                              style: TextStyle(color: AppColors.textColor),
+                            ),
                     ),
                   ),
                 ],
@@ -158,6 +144,7 @@ class _AddNewsState extends State<AddNews> {
           );
         },
       );
+      return;
     }
 
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -237,52 +224,54 @@ class _AddNewsState extends State<AddNews> {
     }
   }
 
-  _validate(){
-    if(_image == null){
+  _validate() {
+    if (_image == null) {
       setState(() {
         isLoading = false;
       });
       Flushbar(
-        title:  "Image missing",
-        message:  "Please pick image to continue",
-        duration:  const Duration(seconds: 3),
+        title: "Image missing",
+        message: "Please pick image to continue",
+        duration: const Duration(seconds: 3),
         backgroundColor: const Color(0Xffc71f37).withOpacity(0.5),
         flushbarPosition: FlushbarPosition.TOP,
-        icon: const Icon(Icons.warning,
-        color: Colors.white,
-        ),
-      ).show(context);
-    } else if(_titleController.text.trim() == ""){
-      setState(() {
-        isLoading = false;
-      });
-      Flushbar(
-        title:  "Title missing",
-        message:  "Please provide news title",
-        duration:  const Duration(seconds: 3),
-        backgroundColor: const Color(0Xffc71f37).withOpacity(0.5),
-        flushbarPosition: FlushbarPosition.TOP,
-        icon: const Icon(Icons.warning,
+        icon: const Icon(
+          Icons.warning,
           color: Colors.white,
         ),
       ).show(context);
-    }else if(_descriptionController.text.trim() == ""){
+    } else if (_titleController.text.trim() == "") {
       setState(() {
         isLoading = false;
       });
       Flushbar(
-        title:  "Description missing",
-        message:  "Please provide news description",
-        duration:  const Duration(seconds: 3),
+        title: "Title missing",
+        message: "Please provide news title",
+        duration: const Duration(seconds: 3),
         backgroundColor: const Color(0Xffc71f37).withOpacity(0.5),
         flushbarPosition: FlushbarPosition.TOP,
-        icon: const Icon(Icons.warning,
+        icon: const Icon(
+          Icons.warning,
           color: Colors.white,
         ),
       ).show(context);
-    }else{
+    } else if (_descriptionController.text.trim() == "") {
+      setState(() {
+        isLoading = false;
+      });
+      Flushbar(
+        title: "Description missing",
+        message: "Please provide news description",
+        duration: const Duration(seconds: 3),
+        backgroundColor: const Color(0Xffc71f37).withOpacity(0.5),
+        flushbarPosition: FlushbarPosition.TOP,
+        icon: const Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+      ).show(context);
+    } else {
       _uploadPost();
     }
   }
-
 }

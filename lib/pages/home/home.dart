@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sockeyway_web/pages/home/dashboard_screen.dart';
 import 'package:sockeyway_web/pages/home/fixture_screen.dart';
+import 'package:sockeyway_web/pages/home/player_cv.dart';
 import 'package:sockeyway_web/pages/home/post_screen.dart';
+import 'package:sockeyway_web/pages/home/tickets.dart';
 import 'package:sockeyway_web/utils/colors.dart';
 import 'package:sockeyway_web/widgets/logout_dialog.dart';
 
@@ -25,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var dashboardData;
   Color? selectedColor;
   Color? selectedTextColor;
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _sideMenu() {
-    var appHeight =  MediaQuery.of(context).size.height;
+    var appHeight = MediaQuery.of(context).size.height;
     var appWidth = MediaQuery.of(context).size.width;
     return Container(
       width: 210,
@@ -73,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Padding(
-        padding:  EdgeInsets.only(
+        padding: EdgeInsets.only(
           left: appWidth * 0.01,
           top: appHeight * 0.01,
           right: appWidth * 0.01,
@@ -83,12 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListView.builder(
-              itemCount: 4,
+              itemCount: 6,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
-                if (selectedIndex == index){
+                if (selectedIndex == index) {
                   selectedColor = AppColors.primaryColor.withOpacity(0.1);
                   selectedTextColor = Colors.white;
                 } else {
@@ -109,6 +110,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   // pageIndex = 3;
                 } else if (index == 3) {
                   name = 'Fixtures';
+                  icon = Icons.sports_soccer;
+                  // pageIndex = 4;
+                } else if (index == 4) {
+                  name = 'Player Cv';
+                  icon = CupertinoIcons.profile_circled;
+                  // pageIndex = 4;
+                } else if (index == 5) {
+                  name = 'Tickets';
                   icon = CupertinoIcons.tickets;
                   // pageIndex = 4;
                 }
@@ -116,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mouseCursor: MouseCursor.uncontrolled,
                   onTap: () => {
                     setState(
-                          () {
+                      () {
                         selectedIndex = index;
                         // pageIndex = index == null ? 0 : index + 1;
                         if (index == 0) {
@@ -127,6 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           pageIndex = 3;
                         } else if (index == 3) {
                           pageIndex = 4;
+                        } else if (index == 4) {
+                          pageIndex = 5;
+                        } else if (index == 5) {
+                          pageIndex = 6;
                         }
                       },
                     ),
@@ -136,9 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: selectedColor,
-                        borderRadius:  const BorderRadius.only(
-                            topRight: Radius.circular(2)
-                        ),
+                        borderRadius: const BorderRadius.only(topRight: Radius.circular(2)),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -148,12 +159,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icon(
                               icon,
                               size: 30,
-                              color:selectedTextColor,
+                              color: selectedTextColor,
                             ),
                             const SizedBox(width: 20),
                             Text(
                               name,
-                              style:  TextStyle(
+                              style: TextStyle(
                                 color: selectedTextColor,
                                 fontSize: 15,
                               ),
@@ -173,18 +184,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: const BorderRadius.only(topRight: Radius.circular(20)),
               ),
               child: TextButton(
-                onPressed: () => {
-                  showDialog(context: context, builder: (_) => LogoutDialog())
-                },
-                child:   Row(
+                onPressed: () => {showDialog(context: context, builder: (_) => const LogoutDialog())},
+                child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.logout,
                       size: 30,
                       color: AppColors.secondaryColor,
                     ),
-                     SizedBox(width: appWidth * 0.01),
-                     Text(
+                    SizedBox(width: appWidth * 0.01),
+                    Text(
                       'Logout',
                       style: TextStyle(
                         color: AppColors.secondaryColor.withOpacity(0.7),
@@ -210,21 +219,27 @@ class _HomeScreenState extends State<HomeScreen> {
         child: DashboardScreen(),
       );
     } else if (pageIndex == 2) {
-      return   Expanded(
-        child:PostScreen(),
+      return Expanded(
+        child: PostScreen(),
       );
     } else if (pageIndex == 3) {
-      return  const Expanded(
+      return const Expanded(
         child: NewsScreen(),
       );
     } else if (pageIndex == 4) {
       return const Expanded(
         child: FixturesScreen(),
       );
-    }else {
-      return   Expanded(
-          child:  DashboardScreen());
+    } else if (pageIndex == 5) {
+      return const Expanded(
+        child: PlayerCvPage(),
+      );
+    } else if (pageIndex == 6) {
+      return const Expanded(
+        child: TicketsPage(),
+      );
+    } else {
+      return Expanded(child: DashboardScreen());
     }
   }
-
 }

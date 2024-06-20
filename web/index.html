@@ -35,6 +35,27 @@
 </head>
 <body>
 <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('flutter-first-frame', function () {
+      navigator.serviceWorker.register('flutter_service_worker.js');
+    });
+  }
+</script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB6HZWZbmJ_JsdPbheb6EMlpGm6LRnhYsc",
+    authDomain: "sockeyway.firebaseapp.com",
+    projectId: "sockeyway",
+    messagingSenderId: "898370900411",
+    appId: "1:898370900411:web:c71f0b9c9e5d5d7f86349e"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       FlutterLoader.load({
@@ -51,5 +72,6 @@
   </script>
   <script src="flutter_bootstrap.js" async></script>
   <script type="text/javascript"> window.flutterWebRenderer = "html"; </script>
+<script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
